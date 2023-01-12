@@ -49,7 +49,7 @@
         }
 
         async function fetchIdea() {
-            const URI = "http://localhost:3000/idea";
+            const URI = "https://ideas-js.vercel.app/idea";
             const data = fetch(URI)
                 .then(res => res.json())
                 .then(data => {
