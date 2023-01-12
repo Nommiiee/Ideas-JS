@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const ideaSchema = require("./models/dataSet.js");
 const app = express();
+const route = express.Router();
 const port = 3000;
 const ideasData = require("./src/ideas.js");
 
@@ -27,9 +28,11 @@ const initialise = async function () {
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static("./dist"));
+// app.use(express.static("./dist"));
 
-app.get("/idea", async (req, res) => {
+app.use("./netlify/function", route);
+
+route.get("/", async (req, res) => {
   try {
     const idea = await getRandomIdea();
     res.json(idea);
@@ -39,7 +42,16 @@ app.get("/idea", async (req, res) => {
   }
 });
 
-app.get("/refresh", async (req, res) => {
+route.get("/idea", async (req, res) => {
+  try {
+    res.sendFile("./dist/index.html", { root: __dirname });
+  } catch (error) {
+    console.log(error);
+    res.send("Something Went Wrong, Please Try Again");
+  }
+});
+
+route.get("/refresh", async (req, res) => {
   try {
     await deleteIdeas();
     await putIdeas();
