@@ -26,10 +26,6 @@ const initialise = async function () {
   }
 };
 
-app.use(cors());
-app.use(express.json());
-app.use(express.static("public"));
-
 app.get("/idea", async (req, res) => {
   try {
     const idea = await getRandomIdea();
@@ -86,3 +82,5 @@ async function getRandomIdea() {
   const idea = await ideaSchema.findOne().skip(random);
   return idea;
 }
+
+module.exports = app;
