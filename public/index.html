@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Project Ideas</title>
+    <!-- tailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/output.css" type="css" />
+</head>
+
+<body>
+
+    <div class="w-full h-screen flex items-center justify-center  bg-repeat "
+        style="background-image: url(backgound.webp);">
+        <div
+            class="w-10/12 ms:w-8/12 lg:w-7/12 xl:w-5/12  bg-gray-100 rounded-xl shadow-xl p-4 flex flex-col items-center justify-between">
+            <div class="text-center">
+                <p class=" flex justify-center items-end w-full">
+                    <img src="JSLOGO.svg" class="w-24 h-24 rounded-md" alt="Javascript Logo"> <span
+                        class="text-6xl pl-4">Ideas</span>
+                </p>
+                <br>
+                <p class="text-4xl">
+                    Make A <span class="text-4xl sm:text-5xl lg:text-6xl font-serif" id="idea">Calender App</span>
+                </p>
+            </div>
+            <div class="pt-10">
+                <button onclick="btnAnimate(this);"
+                    class="w-64 font-bold text-2xl py-2 bg-blue-500 text-white rounded-full shadow-xl hover:bg-blue-600  transition-all  transform duration-200                ">
+                    New Idea
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function btnAnimate(btn) {
+            btn.classList.add('translate-y-1');
+            btn.classList.add("scale-95");
+            setTimeout(() => {
+                btn.classList.remove("scale-95");
+                btn.classList.remove('translate-y-1');
+            }, 100);
+            fetchIdea()
+        }
+
+        async function fetchIdea() {
+            const URI = "http://localhost:3000/idea";
+            const data = fetch(URI)
+                .then(res => res.json())
+                .then(data => {
+
+                    document.getElementById("idea").innerHTML = data.idea;
+                })
+                .catch(err => console.log(err));
+        }
+
+        document.onload = fetchIdea();
+    </script>
+</body>
+
+</html>

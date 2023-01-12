@@ -28,30 +28,19 @@ const initialise = async function () {
 
 app.use(cors());
 app.use(express.json());
-// app.use(express.static("./dist"));
+app.use(express.static("public"));
 
-app.use("./netlify/function", route);
-
-route.get("/", async (req, res) => {
+app.get("/idea", async (req, res) => {
   try {
     const idea = await getRandomIdea();
-    res.json(idea);
+    res.send(idea);
   } catch (error) {
     console.log(error);
     res.send("Something Went Wrong, Please Try Again");
   }
 });
 
-route.get("/idea", async (req, res) => {
-  try {
-    res.sendFile("./dist/index.html", { root: __dirname });
-  } catch (error) {
-    console.log(error);
-    res.send("Something Went Wrong, Please Try Again");
-  }
-});
-
-route.get("/refresh", async (req, res) => {
+app.get("/refresh", async (req, res) => {
   try {
     await deleteIdeas();
     await putIdeas();
