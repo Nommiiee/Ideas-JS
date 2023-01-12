@@ -24,3 +24,7 @@ const initialise = async function () {
     console.log(error);
   }
 };
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static("./dist/index.html"));
